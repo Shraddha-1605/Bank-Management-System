@@ -279,7 +279,7 @@ void Node::depositAmount()
                 cout<<"         How much amount do you want to deposit : "<<" ";
                 cin>>amount;
                 cout<<endl;
-                cout<<"                                                Status BEFORE Deposit Amount in ACCOUNT                                             "<<endl<<endl;
+                cout<<"                                                         Status BEFORE Deposit Amount in ACCOUNT                                             "<<endl<<endl;
                 show_account(temp);
                 temp->balance=(temp->balance) + amount;
                 cout<<"                                                         Status AFTER Deposit Amount in ACCOUNT                                             "<<endl<<endl;
@@ -440,7 +440,7 @@ void Node::EditAccountInformation()
                 }
                 cout<<endl;
 
-                cout<<"         Enter your phone Number (with your country code +91 ): "<<" ";
+                cout<<"         Enter your phone Number : "<<" ";
                 cout<<"+91 ";
                 cin>>temp->phone_number;
                 while(temp->phone_number.length()!=10)
@@ -451,7 +451,7 @@ void Node::EditAccountInformation()
                 }
                 cout<<endl;
 
-
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
                 cout<<"         Enter a type of account you want to create (saving or current): "<<" ";
                 getline(cin,temp->account_type);
                 transform(temp->account_type.begin(),temp->account_type.end(),temp->account_type.begin(),::tolower);
@@ -508,46 +508,59 @@ void Node::atmService()
                 temp->balance=(temp->balance) + amount;
                 cout<<"         New balance:"<<temp->balance<<endl<<endl ;
                 cout<<"         Successfully deposited !! "<<endl<<endl;
+                getch();
                 return;
             }
             else if(choice==2)
             {
                 cout<<"         Enter the amount to be withdraw : "<<" ";
                 cin>>amount;
+                cout<<endl;
                 temp->balance=(temp->balance)-amount;
                 if(temp-> balance>=500 && temp->account_type=="saving")
                 {
-                    cout<<"         New Balance : "<<temp->balance<<endl;
+                    cout<<"         New Balance : "<<temp->balance<<endl<<endl;
                     cout<<"         Amount withdraw successfully!!"<<endl;
+                    getch();
                     return;
                 }
                 else if(temp-> balance>=1000 && temp->account_type=="current")
                 {
-                    cout<<"         New Balance : "<<temp->balance<<endl;
+                    cout<<"         New Balance : "<<temp->balance<<endl<<endl;
                     cout<<"         Amount withdraw successfully!!"<<endl;
+                    getch();
                     return;
                 }
                 else
                 {
 
-                    cout<<"         You can not withdraw this much amount , Withdrawal of amount failed"<<endl;
+                    cout<<endl<<"         You can not withdraw this much amount , Withdrawal of amount failed"<<endl;
                     temp->balance=(temp->balance)+amount;
+                    getch();
                     return;
                 }
             }
             else if(choice==3)
             {
                 cout<<"         Current Balance : "<<temp->balance<<endl;
+                getch();
+                return ;
+            }
+            else if(choice==4)
+            {
                 return ;
             }
             else
             {
-                return ;
+                cout<<"         Invalid choice "<<endl;
+                getch();
+                return;
             }
         }
         temp=temp->right;
     }
     cout<<"         Invalid Pin , try again ! "<<endl;
+    getch();
 }
 
 void Node:: account_Transaction()
@@ -749,6 +762,7 @@ int menu2()
 int main()
 {
     Node n1;
+    int ch;
     cout<<endl<<endl<<endl<<endl<<endl<<"                                                             WELCOME TO OUR BANK"<<endl<<endl;
 
 jump:
@@ -793,7 +807,8 @@ jump:
                     goto jump;
                     break;
                 default:
-                    cout<<"Invalid  choice , Try again "<<endl;
+                    cout<<"         Invalid  choice , Try again "<<endl;
+                    getch();
                     break;
                 }
             }
@@ -850,6 +865,7 @@ jump:
 
                 default:
                     cout<<"         Invalid  choice , Try again "<<endl;
+                    getch();
                     break;
                 }
             }
@@ -860,7 +876,6 @@ jump:
         {
             system("CLS");
             n1.atmService();
-            getch();
             system("CLS");
             goto jump;
         }
@@ -875,8 +890,11 @@ jump:
         break;
 
         default :
-            cout<<"         Invalid Option"<<endl<<"Please try again"<<endl;
-            exit(0);
+            cout<<"         Invalid Option"<<endl<<"         Please try again"<<endl;
+            getch();
+            system("CLS");
+            goto jump;
+            break;
 
         }
 
